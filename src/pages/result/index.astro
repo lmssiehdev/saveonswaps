@@ -1,43 +1,20 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import type { Params } from "@/utils/schemas";
-import { getFromMap } from "@/utils/misc";
+import { getParams } from "@/utils/misc";
 import { data } from "../../../data/mockResponse";
+import CoinSelector from "../../components/CoinSelector/CoinSelector.astro";
 import ExchangeList from "../../components/ExchangeList.astro";
-import FallBackInput from "../../components/FallBackInput.astro";
-import Input from "../../components/Input";
-import { GET } from "@/utils/fetch";
-
-type PageProps = {
-  searchParams: Params;
-};
-
-const payload = {
-  from: "xmr",
-  to: "ltc",
-  amount: 1,
-};
 
 // const data = await GET(payload);
-const searchParams = Astro.url.searchParams;
-const params = {
-  from: searchParams.get("from") || "btc",
-  to: searchParams.get("to") || "xmr",
-  amount: Number(searchParams.get("amount")) || 0.1,
-};
+const searchParams = getParams(Astro.url.searchParams);
 
-const { from, to, amount } = params;
+const { from, to, amount } = searchParams;
 
 const title = `${from.toUpperCase()} to ${to.toUpperCase()} deals | find the cheapest`;
 ---
 
 <Layout title={title}>
-  <div class="js-enhanced-component">
-    <Input client:idle from={from} to={to} amount={amount} />
-  </div>
-  <noscript>
-    <FallBackInput from={from} to={to} amount={amount} />
-  </noscript>
+  <CoinSelector {...searchParams} />
   <h2 class="text-4xl font-bold font-satoshi my-10">Result</h2>
   {
     true || data.status === 200 ? (

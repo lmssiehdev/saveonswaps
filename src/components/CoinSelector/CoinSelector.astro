@@ -1,0 +1,15 @@
+---
+import FallBackInput from "../../components/FallBackInput.astro";
+import Input from "../../components/Input";
+
+const { from, to, amount } = Astro.props as ;
+---
+
+<div>
+  <div class="js-enhanced-component">
+    <Input client:idle from={from} to={to} amount={amount} />
+  </div>
+  <noscript>
+    <FallBackInput from={from} to={to} amount={amount} />
+  </noscript>
+</div>

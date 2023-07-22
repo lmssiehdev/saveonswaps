@@ -1,3 +1,5 @@
+import { paramsSchema, type Params } from "./schemas";
+
 /**
   Retrieves the error message from an error object or any other value.
   
@@ -32,4 +34,29 @@ export function sortByKey(array: any[], key: string) {
     const y = b[key];
     return x > y ? -1 : x < y ? 1 : 0;
   });
+}
+
+/**
+ * Get parameters from a URLSearchParams object or return default values.
+ *
+ * @param - Optional URLSearchParams object containing the parameters.
+ * @returns An object with the extracted parameters or default values.
+ */
+export function getParams(searchParams?: URLSearchParams): Params {
+  if (!searchParams) {
+    return {
+      from: "btc",
+      to: "xmr",
+      amount: 0.1,
+    };
+  }
+
+  // * find a better way to do this
+  const params = paramsSchema.parse({
+    from: searchParams.get("from") || "btc",
+    to: searchParams.get("to") || "xmr",
+    amount: Number(searchParams.get("amount")) || 0.1,
+  });
+
+  return params;
 }
