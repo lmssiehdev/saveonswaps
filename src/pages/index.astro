@@ -1,10 +1,14 @@
 ---
 import Input from "../components/Input";
 import Layout from "../layouts/Layout.astro";
+import CoinSelector from "../components/CoinSelector/CoinSelector.astro";
+import { getParams } from "@/utils/misc";
+
+const searchParams = getParams();
 ---
 
 <Layout title="saveonswaps">
   <main>
-    <Input client:load />
+    <CoinSelector {...searchParams} />
   </main>
 </Layout>
