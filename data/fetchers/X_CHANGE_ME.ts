@@ -13,13 +13,16 @@ const resultSchema = z.object({
  */
 async function xChangeFetcher({ from, to, amount }: Params) {
   try {
-    const { data } = await axios.get("https://xchange.me/api/v1/ /estimate", {
-      params: {
-        amount,
-        from_currency: from,
-        to_currency: to,
-      },
-    });
+    const { data } = await axios.get(
+      "https://xchange.me/api/v1/exchange/estimate",
+      {
+        params: {
+          amount,
+          from_currency: from,
+          to_currency: to,
+        },
+      }
+    );
 
     const { estimate } = resultSchema.parse(data);
 
