@@ -1,0 +1,89 @@
+---
+import { exchangeDisplayInfoSchema } from "@/utils/schemas";
+import type { z } from "zod";
+import { Button } from "./Common/Button";
+import { Label } from "./Common/Label";
+
+const schema = exchangeDisplayInfoSchema;
+
+type Props = {
+  exchange: z.infer<typeof schema>;
+  to: string;
+};
+
+const { exchange, to } = Astro.props as Props;
+
+const { estimate, provider, url, usdEstimate, type, image, kyc } = exchange;
+
+const KYC_LEVELS_INFO = {
+  A: "Never asks for user verification.",
+  B: "Rarely asks for verification. Refunds if refused.",
+  C: "Rarely asks for verification. Refunds if refused, unless a legal order prevents it.",
+  D: "Rarely asks for verification. In case of refusal may block funds indefinitely without a legal order.",
+};
+---
+
+<div
+  class="flex flex-col sm:flex-row gap-5 sm:gap-3 justify-between my-2 p-4 rounded border border-solid border-white/10 bg-black/30 backdrop-blur-md"
+>
+  <div class="flex-1 flex justify-between items-center">
+    <div class="flex gap-3">
+      {
+        image && (
+          <div class="rounded-sm w-20 h-20 flex items-center gap-2 bg-image-gradient-glow">
+            <img
+              class="p-1"
+              src={`/images/partners/${image}`}
+              alt="exchange image"
+            />
+          </div>
+        )
+      }
+      <div>
+        <div class="flex gap-2">
+          <h3 class="font-semibold text-lg">{provider}</h3>
+          {
+            exchange?.bestValue && (
+              <div class="flex items-center">
+                <Label variant="glowing" className="inline-block">
+                  Best Deal
+                </Label>
+              </div>
+            )
+          }
+        </div>
+        <span class="capitalize text-xs text-muted font-mono">
+          {type.replace("_", " ").toLowerCase()}
+        </span>
+        <div class="mt-2 hidden sm:block">
+          {
+            kyc && (
+              <div class=" text-green-500 text-xs opacity-85">
+                {KYC_LEVELS_INFO[kyc.rating]}
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <span class="text-sm text-gray-200"
+        >{`${estimate} ${to.toUpperCase()}`}</span
+      >
+      <span class="block text-sm text-muted">{usdEstimate}</span>
+    </div>
+  </div>
+  <!-- <div class="flex items-center gap-4"> -->
+  <!-- </div> -->
+  <div class="flex items-center">
+    <Button
+      as="a"
+      href={url}
+      variant="glowing"
+      color="green"
+      className="w-full text-center sm:w-fit"
+    >
+      Exchange
+    </Button>
+  </div>
+</div>

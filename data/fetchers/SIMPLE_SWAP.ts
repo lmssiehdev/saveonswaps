@@ -6,7 +6,7 @@ import { Params } from "./types";
 const resultSchema = z.string();
 
 async function simpleswapFetcher({ from, to, amount }: Params) {
-  const API_KEY = process.env.SIMPLE_SWAP_API_KEY;
+  const API_KEY = import.meta.env.SIMPLE_SWAP_API_KEY;
   try {
     if (!API_KEY) {
       throw new Error(" Please provide an api key ");

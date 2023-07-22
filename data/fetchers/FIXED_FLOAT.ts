@@ -27,13 +27,13 @@ async function fixedfloatFetcher({ from, to, amount }: Params) {
   // Generate the signature
   const jsonPayload = JSON.stringify(payload);
   const signature = crypto
-    .createHmac("sha256", process.env.FIXEDFLOAT_API_SECRET!)
+    .createHmac("sha256", import.meta.env.FIXEDFLOAT_API_SECRET!)
     .update(jsonPayload)
     .digest("hex");
 
   const headers = {
     Accept: "application/json",
-    "X-API-KEY": process.env.FIXEDFLOAT_API_KEY,
+    "X-API-KEY": import.meta.env.FIXEDFLOAT_API_KEY,
     "Content-Type": "application/json; charset=UTF-8",
     "X-API-SIGN": signature,
   };

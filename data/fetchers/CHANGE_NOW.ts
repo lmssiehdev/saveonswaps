@@ -11,7 +11,7 @@ const resultSchema = z.object({
   @see https://documenter.getpostman.com/view/8180765/SVfTPnM8#ef213b82-c9ff-497a-baac-587deda872a1
 */
 async function changeNowFetcher({ from, to, amount }: Params) {
-  const API_KEY = process.env.CHANGENOW_API_KEY;
+  const API_KEY = import.meta.env.CHANGENOW_API_KEY;
 
   try {
     if (!API_KEY) {

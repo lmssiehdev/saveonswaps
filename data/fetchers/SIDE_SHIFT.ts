@@ -24,7 +24,7 @@ async function sideShiftFetcher({ from, to, amount }: Params) {
       payload,
       {
         headers: {
-          "x-sideshift-secret": process.env.SIDESHIFT_API_KEY,
+          "x-sideshift-secret": import.meta.env.SIDESHIFT_API_KEY,
           "x-user-ip": "1.2.3.4",
           "Content-Type": "application/json",
         },

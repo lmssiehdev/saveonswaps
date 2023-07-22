@@ -11,7 +11,7 @@ const returnSchema = z.object({
  * @see https://api.letsexchange.io/doc
  */
 async function letsexchangeFetcher({ from, to, amount }: Params) {
-  const API_KEY = process.env.LETSEXCHANGE_API_KEY;
+  const API_KEY = import.meta.env.LETSEXCHANGE_API_KEY;
 
   try {
     if (!API_KEY) {

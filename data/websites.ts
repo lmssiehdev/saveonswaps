@@ -1,4 +1,4 @@
-import { Params } from "./fetchers/types";
+import type { Params } from "./fetchers/types";
 import { SIMPLE_SWAP_FETCHER } from "./fetchers/SIMPLE_SWAP";
 import { SIDE_SHIFT_FETCHER } from "./fetchers/SIDE_SHIFT";
 import { GODEX_FETCHER } from "./fetchers/GODEX";
@@ -42,11 +42,12 @@ type WebsiteInfo = {
     rating: KYC_RATING;
   };
   getEstimate: ({ from, to, amount }: Params) => Promise<number | undefined>;
+  tor?: string;
 };
 
 const CHANGE_NOW: WebsiteInfo = {
   name: "Change Now",
-  image: "",
+  image: "CHANGE_NOW.svg",
   getEstimate: CHANGE_NOW_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
@@ -59,17 +60,22 @@ const CHANGE_NOW: WebsiteInfo = {
 
 const MAJESTIC_BANK: WebsiteInfo = {
   name: "Majestic Bank",
-  image: "",
+  image: "MAJESTIC_BANK.png",
   type: "INSTANT_EXCHANGE",
   // I should contact them
   acceptDynamicUrl: false,
   getEstimate: MAJESTIC_BANK_FETCHER,
-  affiliateWebsite: "dancing_cat_fix_me",
+  affiliateWebsite: "https://majesticbank.sc/?ref=R5qQvM",
+  affiliateID: "R5qQvM",
+  tor: "http://majestictfvnfjgo5hqvmuzynak4kjl5tjs3j5zdabawe6n2aaebldad.onion/",
+  kyc: {
+    rating: "A",
+  },
 };
 
 const SIDE_SHIFT: WebsiteInfo = {
   name: "Side Shift",
-  image: "",
+  image: "SIDE_SHIFT.svg",
   getEstimate: SIDE_SHIFT_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
@@ -81,7 +87,7 @@ const SIDE_SHIFT: WebsiteInfo = {
 
 const SWAPUZ: WebsiteInfo = {
   name: "Swapuz",
-  image: "",
+  image: "SWAPUZ.svg",
   getEstimate: SWAPUZ_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: false,
@@ -90,61 +96,77 @@ const SWAPUZ: WebsiteInfo = {
 
 const X_CHANGE_ME: WebsiteInfo = {
   name: "X change",
+  image: "X_CHANGE_ME.png",
   acceptDynamicUrl: true,
   getEstimate: X_CHANGE_ME_FETCHER,
   type: "INSTANT_EXCHANGE",
   generateDynamicUrl: ({ from, to, amount }: Params) =>
     `https://xchange.me/exchange/create?from_amount=${amount}&from_currency=${from.toLowerCase()}&to_currency=${to.toLowerCase()}`,
-  affiliateWebsite: "dancing_cat_fix_me",
+  // require PGP to get an affiliate ID
+  affiliateWebsite: "https://xchange.me",
+  affiliateID: "null",
+  tor: "http://xmxmrjoqo63c5notr2ds2t3pdpsg4ysqqe6e6uu2pycecmjs4ekzpmyd.onion/",
+  kyc: {
+    rating: "A",
+  },
 };
 
 const STEALTH_EX: WebsiteInfo = {
   name: "Stealth Ex",
-  image: "",
+  image: "STEALTH_EX.svg",
   getEstimate: STEALTH_EX_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
   generateDynamicUrl: ({ from, to, amount }: Params) =>
     `https://stealthex.io/?from=${from}&to=${to}&amount=${amount}`,
-  affiliateWebsite: "dancing_cat_fix_me",
+  affiliateWebsite: "https://stealthex.io/?ref=dutdznrc55w",
+  affiliateID: "dutdznrc55w",
 };
 
 const EXOLIX: WebsiteInfo = {
   name: "Exolix",
-  image: "",
+  image: "EXOLIX.svg",
   getEstimate: EXOLIX_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
-  generateDynamicUrl: ({ from, to, amount }: Params) =>
-    `https://exolix.com/pairs/${from}to-${to}`,
-  affiliateWebsite: "dancing_cat_fix_me",
+  // * affiliate id doesn't work with dynamic url, already email the company and waiting for a response.
+  // generateDynamicUrl: ({ from, to, amount }: Params) =>
+  //   `https://exolix.com/pairs/${from}to-${to}`,
+  affiliateWebsite: "https://exolix.com?ref=EAE7E820C749C753EAE2F44707E7CD12",
+  affiliateID: "EAE7E820C749C753EAE2F44707E7CD12",
 };
 
 const LETS_EXCHANGE: WebsiteInfo = {
   name: "Lets Exchange",
-  image: "",
+  image: "LETS_EXCHANGE.svg",
   getEstimate: LETS_EXCHANGE_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
   generateDynamicUrl: ({ from, to, amount }: Params) =>
     `https://letsexchange.io/exchange/${from}-to-${to}`,
-  affiliateWebsite: "dancing_cat_fix_me",
+  affiliateWebsite: "https://letsexchange.io/?ref_id=eiIcQUFJWFMWdkZ4",
+  affiliateID: "eiIcQUFJWFMWdkZ4",
 };
 
 const EXCH: WebsiteInfo = {
   name: "Exch",
-  image: "",
+  image: "EXCH.png",
   getEstimate: EXCH_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
   generateDynamicUrl: ({ from, to, amount }: Params) =>
     `https://exch.cx/?from_currency=${from}&from_amount=${amount}&to_currency=${to}`,
-  affiliateWebsite: "dancing_cat_fix_me",
+  affiliateWebsite: "http://exch.cx/?ref=BD5a1a6C",
+  affiliateID: "BD5a1a6C",
+  tor: "http://hszyoqwrcp7cxlxnqmovp6vjvmnwj33g4wviuxqzq47emieaxjaperyd.onion/",
+  kyc: {
+    rating: "A",
+  },
 };
 
 const FIXED_FLOAT: WebsiteInfo = {
   name: "Fixed Float",
-  image: "",
+  image: "FIXED_FLOAT.svg",
   getEstimate: FIXED_FLOAT_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
@@ -157,21 +179,22 @@ const FIXED_FLOAT: WebsiteInfo = {
 
 const GODEX: WebsiteInfo = {
   name: "Godex",
-  image: "",
+  image: "GODEX.svg",
   getEstimate: GODEX_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,
-  generateDynamicUrl: ({ from, to, amount }: Params) =>
-    `https://godex.io/exchange/?coin_from=${from}&coin_to=${to}&amoun
-    t=${amount}`,
-  affiliateWebsite: "dancing_cat_fix_me",
-
+  // * affiliate id doesn't work with dynamic url, already email the company and waiting for a response.
+  // generateDynamicUrl: ({ from, to, amount }: Params) =>
+  //   `https://godex.io/exchange/?coin_from=${from}&coin_to=${to}&amoun
+  //   t=${amount}`,
+  affiliateWebsite: "https://godex.io/?aff_id=sxq7f20HT86trCSG",
+  affiliateID: "sxq7f20HT86trCSG",
   //
 };
 
 const SIMPLE_SWAP: WebsiteInfo = {
   name: "Simple Swap",
-  image: "",
+  image: "SIMPLE_SWAP.svg",
   getEstimate: SIMPLE_SWAP_FETCHER,
   type: "INSTANT_EXCHANGE",
   acceptDynamicUrl: true,

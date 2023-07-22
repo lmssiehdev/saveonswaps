@@ -1,7 +1,7 @@
 import { getErrorMessage } from "@/utils/misc";
 import axios from "axios";
 import { z } from "zod";
-import { Params } from "./types";
+import type { Params } from "./types";
 
 const resultSchema = z.object({
   estimated_amount: z.string(),
@@ -11,7 +11,7 @@ const resultSchema = z.object({
  * @see https://documenter.getpostman.com/view/11320959/T17J8mzw?version=latest
  */
 async function stealthExFetcher({ from, to, amount }: Params) {
-  const API_KEY = process.env.STEALTHEX_API_KEY;
+  const API_KEY = import.meta.env.STEALTHEX_API_KEY;
 
   try {
     if (!API_KEY) {

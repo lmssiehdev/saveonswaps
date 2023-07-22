@@ -7,6 +7,12 @@ export const exchangeDisplayInfoSchema = z.object({
   usdEstimate: z.number().or(z.string()),
   type: z.string(),
   bestValue: z.boolean().optional(),
+  image: z.string().optional(),
+  kyc: z
+    .object({
+      rating: z.string(),
+    })
+    .optional(),
 });
 
 export type ExchangeDisplayInfo = z.infer<typeof exchangeDisplayInfoSchema>;

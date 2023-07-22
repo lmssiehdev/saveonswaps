@@ -1,0 +1,57 @@
+---
+import { Input } from "@/components/Common/Input";
+import { supportedCoins } from "@/utils/constants";
+import { Button } from "./Common/Button";
+
+const { from, to, amount } = Astro.props;
+---
+
+<form action="/result">
+  <Input
+    placeholder="amount..."
+    className=`font-medium py-2.5 px-4 mb-4 text-black 
+          mt-1
+          block
+          w-full
+          rounded-sm
+          border-gray-300
+          shadow-sm
+          focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+        `
+    min={0}
+    name="amount"
+    type="number"
+    step="0.1"
+    defaultValue={amount || 0.1}
+    required={true}
+  />
+  <div>
+    from:
+    <select class="text-black" name="from">
+      {
+        supportedCoins.map((coin) => (
+          <option id="from" value={coin} selected={coin === from}>
+            {" "}
+            {coin}
+          </option>
+        ))
+      }
+    </select>
+  </div>
+  <div class="my-2">
+    to:
+    <select class="text-black" name="to">
+      {
+        supportedCoins.map((coin) => (
+          <option value={coin} selected={coin === to}>
+            {" "}
+            {coin}
+          </option>
+        ))
+      }
+    </select>
+  </div>
+  <Button variant="glowing" type="submit" className="block w-full">
+    Get Best Fee
+  </Button>
+</form>
