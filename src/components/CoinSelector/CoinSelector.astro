@@ -1,8 +1,9 @@
 ---
+import type { Params } from "@/utils/schemas";
 import FallBackInput from "../../components/FallBackInput.astro";
 import Input from "../../components/Input";
 
-const { from, to, amount } = Astro.props as ;
+const { from, to, amount } = Astro.props as Params;
 ---
 
 <div>

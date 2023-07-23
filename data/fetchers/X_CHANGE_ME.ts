@@ -1,6 +1,6 @@
 import { getErrorMessage } from "@/utils/misc";
 import axios from "axios";
-import { Params } from "./types";
+import type { Params } from "./types";
 import { z } from "zod";
 
 const resultSchema = z.object({
