@@ -8,7 +8,7 @@ const formatResponse = (r, v, price: number) =>
   ({
     provider: v.name,
     estimate: r,
-    usdEstimate: formatPrice(r!, price),
+    usdEstimate: formatPrice(r! * price),
     url: v.affiliateWebsite,
     type: v.type,
     kyc: v.kyc,

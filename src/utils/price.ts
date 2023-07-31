@@ -36,8 +36,8 @@ export async function getPrice(symbol: Symbol) {
  * @param {number} price - The price per item.
  * @returns {string} The formatted total price as a currency string.
  */
-export function formatPrice(amount: number, price: number) {
-  return (amount * price).toLocaleString("en-US", {
+export function formatPrice(price: number) {
+  return price.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
